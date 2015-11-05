@@ -88,6 +88,18 @@ class ItemResource(Resource):
         return self.__data
 
     def update(self, patch=True, **kwargs):
+
+        primary_index = self.parent.get_index()
+        found_index_key = None
+
+        if primary_index.first_desc[0] in kwargs:
+            found_index_key = primary_index.first_desc[0]
+        elif primary_index.second_desc is not None and primary_index.second_desc[0] in kwargs:
+            found_index_key = primary_index.second_desc[0]
+
+        if found_index_key is not None:
+            raise ValueError('index attribute "{}" cannot be updated.'.format(found_index_key))
+
         updates = kwargs
         persistence_converter = self.get_persistence_converter(self.engine_name)
         if persistence_converter is not None:

@@ -103,6 +103,9 @@ def test_CRUD(RootResource, Organization, User):
     organization = organization_res.data
     assert organization.name == 'updated'
 
+    with raises(ValueError):
+        organization_res.update(id=1)
+
     # delete
     organization_res.delete()
     organization = organization_res.data
