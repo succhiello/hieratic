@@ -108,7 +108,7 @@ class ItemResource(Resource):
         self.get_data()
 
     def delete(self, context=None):
-        self.engine.delete(context)
+        self.engine.delete(self.parent.get_index(), context)
         del self.__parent__[self.__name__]
         self.__is_deleted = True
         self.get_data()

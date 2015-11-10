@@ -16,8 +16,8 @@ class Item(ItemEngine):
         else:
             self.__data = updates
 
-    def delete(self, context):
-        self.collection._delete_raw_item(self.__data)
+    def delete(self, index, context):
+        self.collection._delete_raw_item(index.make_key_dict_from_dict(self.__data))
         self.__data = None
 
     def get_dict(self):
@@ -50,13 +50,11 @@ class Collection(CollectionEngine):
     def query_raw_items(self, index, parent_key_value, **kwargs):
         return itervalues(self.__data[parent_key_value[1]])
 
-    def _delete_raw_item(self, raw_item):
+    def _delete_raw_item(self, key_dict):
 
-        found_keys = [k for k, v in iteritems(self.__data) if v == raw_item]
-        if len(found_keys) == 1:
-            del self.__data[found_keys[0]]
-            return
+        items = list(iteritems(key_dict))
 
-        found_keys = [(k, kk) for k, v in iteritems(self.__data) for kk, vv in iteritems(v) if vv == raw_item]
-        if len(found_keys) == 1:
-            del self.__data[found_keys[0][0]][found_keys[0][1]]
+        if len(items) == 1:
+            del self.__data[items[0][1]]
+        elif len(items) == 2:
+            del self.__data[items[0][1]][items[1][1]]

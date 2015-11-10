@@ -22,7 +22,7 @@ class ItemEngine(object):
         pass
 
     @abstractmethod
-    def delete(self, context):
+    def delete(self, index, context):
         pass
 
 
