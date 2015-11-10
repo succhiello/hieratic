@@ -16,6 +16,7 @@ class PyTest(TestCommand):
 
 requires = [
     'six>=1.9.0',
+    'voluptuous>=0.8.7',
     'typedtuple>=0.0.2',
 ]
 
