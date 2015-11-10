@@ -87,7 +87,7 @@ class ItemResource(Resource):
         self.__data = None if self.__is_deleted else self.get_data_class()(**self.engine.get_dict())
         return self.__data
 
-    def update(self, patch=True, **kwargs):
+    def update(self, patch=True, context=None, **kwargs):
 
         primary_index = self.parent.get_index()
         found_index_key = None
@@ -104,11 +104,11 @@ class ItemResource(Resource):
         persistence_converter = self.get_persistence_converter(self.engine_name)
         if persistence_converter is not None:
             updates = persistence_converter(updates)
-        self.engine.update(patch, updates)
+        self.engine.update(patch, context, updates)
         self.get_data()
 
-    def delete(self):
-        self.engine.delete()
+    def delete(self, context=None):
+        self.engine.delete(context)
         del self.__parent__[self.__name__]
         self.__is_deleted = True
         self.get_data()

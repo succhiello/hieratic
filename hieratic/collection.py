@@ -69,7 +69,7 @@ class CollectionResource(ResourceBase):
             )
         return f
 
-    def create(self, data):
+    def create(self, data, context=None):
         item_class = self.get_item_class()
         data_class = item_class.get_data_class()
         if not isinstance(data, data_class):
@@ -96,7 +96,7 @@ class CollectionResource(ResourceBase):
 
         item_engine = self.get_engine_module().Item(
             self.engine,
-            self.engine.create_raw_item(primary_index, data_dict)
+            self.engine.create_raw_item(primary_index, data_dict, context)
         )
 
         item = item_class(self, key, self.engine_name, item_engine)
@@ -143,10 +143,18 @@ class CollectionResource(ResourceBase):
             yield item
 
     def get_engine_module(self):
-        return self.__engine_modules.setdefault(
-            self.engine_name,
-            self.__load_entry_point('hieratic.engine', self.engine_name)
+        return self.__get_engine_module(self.engine_name)
+
+    @classmethod
+    def __get_engine_module(cls, engine_name):
+        return cls.__engine_modules.setdefault(
+            engine_name,
+            cls.__load_entry_point('hieratic.engine', engine_name)
         )
+
+    @classmethod
+    def get_context(cls, engine_name, *args, **kwargs):
+        return cls.__get_engine_module(engine_name).Collection.get_context(*args, **kwargs)
 
     @staticmethod
     def __load_entry_point(group, name):

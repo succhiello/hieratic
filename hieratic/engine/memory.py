@@ -10,13 +10,13 @@ class Item(ItemEngine):
         ItemEngine.__init__(self, collection, raw_item)
         self.__data = raw_item
 
-    def update(self, patch, updates):
+    def update(self, patch, context, updates):
         if patch:
             self.__data.update(updates)
         else:
             self.__data = updates
 
-    def delete(self):
+    def delete(self, context):
         self.collection._delete_raw_item(self.__data)
         self.__data = None
 
@@ -29,7 +29,7 @@ class Collection(CollectionEngine):
     def __init__(self, name):
         self.__data = {}
 
-    def create_raw_item(self, index, data_dict):
+    def create_raw_item(self, index, data_dict, context):
         first_value = index.get_first_value_from_dict(data_dict)
         if index.second_desc is None:
             self.__data[first_value] = data_dict

@@ -18,11 +18,11 @@ class ItemEngine(object):
         pass
 
     @abstractmethod
-    def update(self, patch, updates):
+    def update(self, patch, context, updates):
         pass
 
     @abstractmethod
-    def delete(self):
+    def delete(self, context):
         pass
 
 
@@ -33,7 +33,7 @@ class CollectionEngine(object):
         pass
 
     @abstractmethod
-    def create_raw_item(self, index, data_dict):
+    def create_raw_item(self, index, data_dict, context):
         pass
 
     @abstractmethod
@@ -43,3 +43,18 @@ class CollectionEngine(object):
     @abstractmethod
     def query_raw_items(self, index_name, **kwargs):
         pass
+
+    class __DefaultContext(object):
+
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, tracaback):
+            return False
+
+    @classmethod
+    def get_context(cls, *args, **kwargs):
+        return cls.__DefaultContext(*args, **kwargs)
