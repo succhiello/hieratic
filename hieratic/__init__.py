@@ -33,16 +33,20 @@ class ResourceBase(dict):
 class Resource(ResourceBase):
 
     @classmethod
-    def register_child(cls, name, definition):
+    def get_child_definitions(cls):
         try:
             cls.__child_definitions
         except AttributeError:
             cls.__child_definitions = {}
-        cls.__child_definitions[name] = definition
+        return cls.__child_definitions
+
+    @classmethod
+    def register_child(cls, name, definition):
+        cls.get_child_definitions()[name] = definition
 
     @classmethod
     def get_child_definition(cls, name):
-        return cls.__child_definitions[name]
+        return cls.get_child_definitions()[name]
 
     @staticmethod
     def children(definitions):
