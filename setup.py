@@ -22,7 +22,7 @@ requires = [
 
 setup(
     name='hieratic',
-    version='0.0.1',
+    version='0.0.2',
     description='hierarchical resource implementation.',
     author='xica development team',
     author_email='info@xica.net',
