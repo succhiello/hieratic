@@ -7,7 +7,6 @@ from hieratic import Resource
 from hieratic.item import ItemResource
 from hieratic.collection import CollectionResource
 from hieratic.index import SimpleIndex
-from hieratic.exceptions import NotFoundError
 
 
 @fixture
@@ -111,7 +110,7 @@ def test_CRUD(RootResource, Organization, User):
     organization = organization_res.data
     assert organization is None
 
-    with raises(NotFoundError):
+    with raises(KeyError):
         root_res['organizations'][0]
 
 
@@ -142,5 +141,5 @@ def test_hierarchy(RootResource, Organization, User):
         organization_res['users'].create(User(organization_id=1, id=0))
 
     root_res['organizations'][0]['users'][0].delete()
-    with raises(NotFoundError):
+    with raises(KeyError):
         root_res['organizations'][0]['users'][0]
