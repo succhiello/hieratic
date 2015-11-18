@@ -103,6 +103,9 @@ class CollectionResource(ResourceBase):
         self[key] = item
         return item
 
+    def retrieve(self, *args):
+        return self.get(self.get_index().make_key_from_values(*args))
+
     def __getitem__(self, key):
         return self.setdefault(key, self.__make_item(key))
 

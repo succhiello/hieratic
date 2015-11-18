@@ -97,6 +97,12 @@ def test_CRUD(RootResource, Organization, User):
     organization = organization_res.data
     assert organization.id == 0
 
+    organization_res = root_res['organizations'].retrieve(0)
+    organization = organization_res.data
+    assert organization.id == 0
+
+    assert root_res['organizations'].retrieve(100) is None
+
     # update
     organization_res.update(name='updated')
     organization = organization_res.data
