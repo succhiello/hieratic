@@ -104,7 +104,10 @@ class CollectionResource(ResourceBase):
         return item
 
     def retrieve(self, *args):
-        return self.get(self.get_index().make_key_from_values(*args))
+        try:
+            return self[self.get_index().make_key_from_values(*args)]
+        except KeyError:
+            return None
 
     def __getitem__(self, key):
         return self.setdefault(key, self.__make_item(key))
