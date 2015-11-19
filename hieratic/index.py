@@ -105,4 +105,8 @@ class SimpleIndex(Index):
             return '{}{}{}'.format(first_value, self.delimiter, d[self.second_desc[0]])
 
     def make_key_dict(self, key):
-        return self.make_key_dict_from_values(*(str(key).rsplit(self.delimiter, 1)))
+        if self.second_desc is None:
+            values = [key]
+        else:
+            values = str(key).rsplit(self.delimiter, 1)
+        return self.make_key_dict_from_values(*values)
