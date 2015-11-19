@@ -1,4 +1,5 @@
 from hieratic import Resource
+from hieratic.service import ServiceResource
 
 
 class TestChildResource0(Resource):
@@ -16,9 +17,15 @@ class TestChildResource1(Resource):
     pass
 
 
+@ServiceResource.utilize('child0', 'child1')
+class FooService(ServiceResource):
+    pass
+
+
 @Resource.children({
     'child0': TestChildResource0,
     'child1': TestChildResource1,
+    'foo_service': FooService,
 })
 class RootResource(Resource):
     pass
@@ -44,3 +51,6 @@ def test_resource():
     assert root['child1']['grandchild'].__parent__ == root['child1']
 
     assert root['child1']['grandchild'].root == root
+
+    assert root['foo_service'].child0 == root['child0']
+    assert root['foo_service'].child1 == root['child1']
