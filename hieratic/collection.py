@@ -127,17 +127,30 @@ class CollectionResource(ResourceBase):
 
     def query(self, index=None, **kwargs):
 
-        primary_index = self.get_index()
-
         is_parent_item_resource = isinstance(self.parent, ItemResource)
         parent_key_value = None
         if index is None and is_parent_item_resource:
-            parent_key_value = (primary_index.first_desc[0], self.parent.name)
+            parent_key_value = (self.get_index().first_desc[0], self.parent.name)
+
+        return self.__make_items_generator(
+            self.engine.query_raw_items(index, parent_key_value, **kwargs)
+        )
+
+    def bulk_get(self, **kwargs):
+        return self.__make_items_generator(self.engine.bulk_get_raw_items(**kwargs))
+
+    def get_engine_module(self):
+        return self.__get_engine_module(self.engine_name)
+
+    def __make_items_generator(self, result):
+
+        primary_index = self.get_index()
+        is_parent_item_resource = isinstance(self.parent, ItemResource)
 
         item_class = self.get_item_class()
         item_engine_class = self.get_engine_module().Item
 
-        for raw_item in self.engine.query_raw_items(index, parent_key_value, **kwargs):
+        for raw_item in result:
             item_engine = item_engine_class(self.engine, raw_item)
             d = item_engine.get_dict()
             if is_parent_item_resource:
@@ -147,9 +160,6 @@ class CollectionResource(ResourceBase):
             item = item_class(self, key, self.engine_name, item_engine)
             self[key] = item
             yield item
-
-    def get_engine_module(self):
-        return self.__get_engine_module(self.engine_name)
 
     @classmethod
     def __get_engine_module(cls, engine_name):
