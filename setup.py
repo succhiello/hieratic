@@ -17,12 +17,12 @@ class PyTest(TestCommand):
 requires = [
     'six>=1.9.0',
     'voluptuous>=0.8.7',
-    'typedtuple>=0.0.2',
+    'typedtuple>=0.0.3',
 ]
 
 setup(
     name='hieratic',
-    version='0.0.2',
+    version='0.0.3',
     description='hierarchical resource implementation.',
     author='xica development team',
     author_email='info@xica.net',
