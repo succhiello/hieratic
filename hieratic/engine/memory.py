@@ -1,7 +1,6 @@
 from six import itervalues, iteritems
 
 from hieratic.engine import ItemEngine, CollectionEngine
-from hieratic.exceptions import NotFoundError
 
 
 class Item(ItemEngine):
@@ -44,7 +43,7 @@ class Collection(CollectionEngine):
         else:
             raw_item = self.__data.get(values[0], {}).get(values[1])
         if raw_item is None:
-            raise NotFoundError('item({}) not found.'.format(dict(key_dict)))
+            raise KeyError(key_dict)
         return raw_item
 
     def query_raw_items(self, index, parent_key_value, **kwargs):
