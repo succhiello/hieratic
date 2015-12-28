@@ -2,6 +2,8 @@ from six import iteritems, callable
 
 from voluptuous import Schema, ALLOW_EXTRA
 
+from typedtuple import TypedTupleType
+
 from hieratic import Resource
 
 
@@ -24,6 +26,8 @@ class ItemResource(Resource):
 
     @classmethod
     def set_data_class(cls, data_class):
+        if not issubclass(data_class, TypedTupleType):
+            raise ValueError('data class must be a type of typedtuple.TypedTupleType.')
         cls.__data_class = data_class
 
     @classmethod

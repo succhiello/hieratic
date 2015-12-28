@@ -149,3 +149,15 @@ def test_hierarchy(RootResource, Organization, User):
     root_res['organizations'][0]['users'][0].delete()
     with raises(KeyError):
         root_res['organizations'][0]['users'][0]
+
+
+def test_invalid_data_class():
+
+    with raises(ValueError):
+
+        class InvalidData(object):
+            pass
+
+        @ItemResource.define(InvalidData)
+        class InvalidItemResource(ItemResource):
+            pass
