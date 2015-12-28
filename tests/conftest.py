@@ -6,7 +6,7 @@ from six import string_types
 
 from voluptuous import Optional, All, Any, Range
 
-from typedtuple import TypedTuple
+from typedtuple import typedtuple
 
 IdSchema = All(int, Range(min=0))
 
@@ -22,9 +22,9 @@ dt = Any(datetime, datetime.fromtimestamp)
 
 @fixture
 def Organization():
-    return TypedTuple('Organization', {'id': IdSchema, Optional('name'): six_string, Optional('created_at'): dt})
+    return typedtuple('Organization', {'id': IdSchema, Optional('name'): six_string, Optional('created_at'): dt})
 
 
 @fixture
 def User():
-    return TypedTuple('User', {'organization_id': IdSchema, 'id': IdSchema, Optional('name'): six_string, Optional('created_at'): dt})
+    return typedtuple('User', {'organization_id': IdSchema, 'id': IdSchema, Optional('name'): six_string, Optional('created_at'): dt})

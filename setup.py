@@ -17,16 +17,16 @@ class PyTest(TestCommand):
 requires = [
     'six>=1.9.0',
     'voluptuous>=0.8.7',
-    'typedtuple>=0.0.3',
+    'typedtuple>=0.1.0',
 ]
 
 setup(
     name='hieratic',
-    version='0.0.3',
+    version='0.0.4',
     description='hierarchical resource implementation.',
-    author='xica development team',
-    author_email='info@xica.net',
-    url='https://github.com/xica/hieratic',
+    author='Satoshi Ebihara',
+    author_email='succhiello@gmail.com',
+    url='https://github.com/succhiello/hieratic',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
