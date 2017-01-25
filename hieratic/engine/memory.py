@@ -9,7 +9,7 @@ class Item(ItemEngine):
         ItemEngine.__init__(self, collection, raw_item)
         self.__data = raw_item
 
-    def update(self, patch, context, updates):
+    def update(self, index, patch, context, updates):
         if patch:
             self.__data.update(updates)
         else:
