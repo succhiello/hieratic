@@ -108,7 +108,7 @@ class ItemResource(Resource):
         persistence_converter = self.get_persistence_converter(self.engine_name)
         if persistence_converter is not None:
             updates = persistence_converter(updates)
-        self.engine.update(patch, context, updates)
+        self.engine.update(patch, primary_index, context, updates)
         self.get_data()
 
     def delete(self, context=None):

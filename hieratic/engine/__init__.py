@@ -18,7 +18,7 @@ class ItemEngine(object):
         pass
 
     @abstractmethod
-    def update(self, patch, context, updates):
+    def update(self, index, patch, context, updates):
         pass
 
     @abstractmethod
