@@ -25,7 +25,7 @@ setup(
     version='0.0.5',
     description='hierarchical resource implementation.',
     author='Satoshi Ebihara',
-    author_email='succhiello@gmail.com',
+    author_email='kiri@succhiello.net',
     url='https://github.com/succhiello/hieratic',
     license='MIT',
     classifiers=[
