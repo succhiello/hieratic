@@ -22,7 +22,7 @@ requires = [
 
 setup(
     name='hieratic',
-    version='0.0.5',
+    version='0.0.6',
     description='hierarchical resource implementation.',
     author='Satoshi Ebihara',
     author_email='kiri@succhiello.net',
