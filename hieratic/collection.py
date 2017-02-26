@@ -132,17 +132,17 @@ class CollectionResource(ResourceBase):
         if index is None and is_parent_item_resource:
             parent_key_value = (self.get_index().first_desc[0], self.parent.name)
 
-        return self.__make_items_generator(
+        return self.make_items_generator(
             self.engine.query_raw_items(index, parent_key_value, **kwargs)
         )
 
     def bulk_get(self, **kwargs):
-        return self.__make_items_generator(self.engine.bulk_get_raw_items(**kwargs))
+        return self.make_items_generator(self.engine.bulk_get_raw_items(**kwargs))
 
     def get_engine_module(self):
         return self.__get_engine_module(self.engine_name)
 
-    def __make_items_generator(self, result):
+    def make_items_generator(self, result):
 
         primary_index = self.get_index()
         is_parent_item_resource = isinstance(self.parent, ItemResource)
